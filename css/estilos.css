@@ -1,0 +1,389 @@
+/* ============================================================
+   CONSORCIO UNIVERSAL NOT — Mockup web
+   Paleta: Azul Marino #0A1F44 · Azul #2A7DE1 · Verde #2ECC71
+           Dorado #D4AF37 · Blanco #FFFFFF · Gris #F3F6FC
+   ============================================================ */
+
+:root {
+  --marino: #0A1F44;
+  --azul: #2A7DE1;
+  --verde: #2ECC71;
+  --dorado: #D4AF37;
+  --blanco: #FFFFFF;
+  --gris: #F3F6FC;
+  --texto: #1A1A2E;
+  --texto-suave: #5A6270;
+  --borde: #C7CCD9;
+  --sombra: 0 4px 16px rgba(10, 31, 68, 0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Segoe UI', 'Open Sans', Arial, Helvetica, sans-serif;
+  color: var(--texto);
+  line-height: 1.6;
+  background: var(--blanco);
+}
+
+img { max-width: 100%; display: block; }
+
+/* Compensa el header fijo al navegar por anclas */
+section[id] { scroll-margin-top: 84px; }
+#inicio { scroll-margin-top: 0; }
+
+/* ---------- Header ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--marino);
+  color: var(--blanco);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+
+.brand img { height: 48px; width: 48px; object-fit: contain; border-radius: 8px; background: #fff; padding: 3px; }
+
+.brand-name { font-weight: 700; font-size: 15px; line-height: 1.2; }
+.brand-name span { display: block; font-size: 12px; color: var(--dorado); font-weight: 600; letter-spacing: 1px; }
+
+.nav { display: flex; gap: 4px; flex-wrap: wrap; }
+
+.nav a {
+  color: var(--blanco);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav a:hover { background: rgba(255,255,255,0.12); }
+.nav a.cta-cotizar { background: var(--verde); color: var(--marino); }
+.nav a.cta-cotizar:hover { background: #27ae60; }
+
+/* ---------- Hero ---------- */
+.hero {
+  background: linear-gradient(135deg, var(--marino) 0%, #16337A 100%);
+  color: var(--blanco);
+  text-align: center;
+  padding: 90px 24px 70px;
+}
+
+.hero .logo-hero { height: 90px; width: 90px; object-fit: contain; margin: 0 auto 16px; border-radius: 14px; background: #fff; padding: 6px; }
+
+.hero h1 { font-size: 42px; letter-spacing: 1px; }
+.hero .sub {
+  color: var(--dorado);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-top: 6px;
+}
+
+.hero p { max-width: 720px; margin: 16px auto 28px; color: #D7DEF0; font-size: 16px; }
+
+.btn {
+  display: inline-block;
+  padding: 13px 26px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
+
+.btn-azul { background: var(--azul); color: var(--blanco); }
+.btn-azul:hover { background: #1f66c4; }
+.btn-verde { background: var(--verde); color: var(--marino); }
+.btn-verde:hover { background: #27ae60; }
+.btn-blanco { background: var(--blanco); color: var(--marino); }
+.btn-oro { background: var(--dorado); color: var(--marino); }
+
+.hero .btn { margin: 4px 8px; }
+
+/* ---------- Secciones generales ---------- */
+section { padding: 64px 24px; }
+
+.contenedor { max-width: 1200px; margin: 0 auto; }
+
+.seccion-clara { background: var(--blanco); }
+.seccion-gris { background: var(--gris); }
+.seccion-marino { background: var(--marino); color: var(--blanco); }
+
+.encabezado-seccion { text-align: center; max-width: 760px; margin: 0 auto 40px; }
+
+.encabezado-seccion .etiqueta {
+  color: var(--dorado);
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.encabezado-seccion h2 { font-size: 32px; color: var(--marino); margin-top: 6px; }
+.seccion-marino .encabezado-seccion h2 { color: var(--blanco); }
+.encabezado-seccion p { color: var(--texto-suave); margin-top: 10px; }
+.seccion-marino .encabezado-seccion p { color: #C7D2EC; }
+
+/* ---------- Vías (2 mundos) ---------- */
+.vias { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 8px; }
+
+.via {
+  border-radius: 14px;
+  padding: 40px 32px;
+  color: var(--blanco);
+  box-shadow: var(--sombra);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+  min-height: 260px;
+  justify-content: center;
+}
+
+.via-azul { background: linear-gradient(135deg, var(--azul), #1f66c4); }
+.via-verde { background: linear-gradient(135deg, var(--verde), #1fa55c); }
+
+.via h3 { font-size: 26px; text-transform: uppercase; }
+.via p { opacity: 0.95; font-size: 15px; }
+.via .btn { align-self: center; margin-top: 8px; }
+
+/* ---------- Certificados ---------- */
+.certs { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+.cert {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-left: 5px solid var(--dorado);
+  border-radius: 10px;
+  padding: 14px 22px;
+  font-weight: 700;
+  color: var(--marino);
+  font-size: 14px;
+  min-width: 200px;
+  text-align: center;
+}
+
+/* ---------- Tarjetas de producto ---------- */
+.grid-productos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+
+.producto {
+  background: var(--blanco);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  border: 1px solid var(--borde);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s;
+}
+
+.producto:hover { transform: translateY(-4px); }
+
+.producto .img-producto { height: 260px; object-fit: cover; width: 100%; }
+
+.producto .cuerpo { padding: 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+
+.producto h3 { color: var(--marino); font-size: 18px; }
+.producto .fragancia { color: var(--azul); font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+.producto p { font-size: 14px; color: var(--texto-suave); }
+.producto .presentacion { font-size: 13px; color: var(--texto-suave); }
+.producto .precio { color: var(--marino); font-weight: 700; font-size: 14px; margin-top: auto; }
+.producto .btn { text-align: center; margin-top: 10px; }
+
+/* ---------- Beneficios ---------- */
+.grid-beneficios { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+.beneficio {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-top: 5px solid var(--azul);
+  border-radius: 12px;
+  padding: 26px 20px;
+  text-align: center;
+  box-shadow: var(--sombra);
+}
+
+.beneficio .icono { font-size: 34px; }
+.beneficio h4 { color: var(--marino); font-size: 16px; margin-top: 10px; }
+.beneficio p { font-size: 14px; color: var(--texto-suave); margin-top: 6px; }
+
+/* ---------- Pasos maquila ---------- */
+.grid-pasos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+.paso {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-top: 5px solid var(--verde);
+  border-radius: 12px;
+  padding: 26px 20px;
+  text-align: center;
+  box-shadow: var(--sombra);
+}
+
+.paso .numero { font-size: 34px; font-weight: 800; color: var(--verde); }
+.paso h4 { color: var(--marino); margin-top: 6px; font-size: 17px; }
+.paso p { font-size: 14px; color: var(--texto-suave); margin-top: 6px; }
+
+/* ---------- Banner CTA ---------- */
+.banner-cta {
+  background: linear-gradient(135deg, var(--marino), #16337A);
+  color: var(--blanco);
+  border-radius: 14px;
+  padding: 44px 32px;
+  text-align: center;
+  border: 1px solid rgba(212,175,55,0.4);
+}
+
+.banner-cta h2 { font-size: 28px; }
+.banner-cta p { color: #C7D2EC; margin-top: 8px; }
+.banner-cta .btn { margin-top: 18px; }
+
+/* ---------- Formularios ---------- */
+.formulario {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  padding: 32px;
+  max-width: 640px;
+  margin: 0 auto;
+  box-shadow: var(--sombra);
+}
+
+.campo { margin-bottom: 16px; }
+
+.campo label { display: block; font-weight: 600; color: var(--marino); font-size: 14px; margin-bottom: 6px; }
+
+.campo input, .campo select, .campo textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--texto);
+  background: var(--gris);
+}
+
+.campo input:focus, .campo select:focus, .campo textarea:focus {
+  outline: 2px solid var(--azul);
+  background: var(--blanco);
+}
+
+.formulario .btn { width: 100%; }
+
+.nota-form { text-align: center; font-size: 13px; color: var(--texto-suave); margin-top: 14px; }
+
+/* ---------- Contacto / datos ---------- */
+.grid-contacto { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+
+.dato-contacto { display: flex; gap: 14px; align-items: center; margin-bottom: 18px; }
+.dato-contacto .icono { font-size: 26px; }
+.dato-contacto h4 { color: var(--marino); font-size: 15px; }
+.dato-contacto p { color: var(--texto-suave); font-size: 14px; }
+
+/* ---------- Nosotros ---------- */
+.grid-nosotros { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+
+.grid-nosotros .texto p { color: var(--texto-suave); margin-bottom: 12px; }
+
+.datos-empresa { list-style: none; }
+.datos-empresa li { padding: 10px 0; border-bottom: 1px solid var(--borde); font-size: 15px; }
+.datos-empresa li strong { color: var(--marino); }
+
+/* ---------- Footer ---------- */
+.footer {
+  background: var(--marino);
+  color: var(--blanco);
+  padding: 48px 24px 24px;
+}
+
+.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
+
+.footer h4 { color: var(--dorado); font-size: 14px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+
+.footer p, .footer a { color: #C7D2EC; font-size: 14px; text-decoration: none; }
+.footer a:hover { color: var(--blanco); }
+
+.footer ul { list-style: none; }
+.footer ul li { margin-bottom: 8px; }
+
+.footer-base { border-top: 1px solid rgba(255,255,255,0.15); margin-top: 32px; padding-top: 18px; text-align: center; font-size: 13px; color: #93A3C8; }
+
+/* ---------- WhatsApp flotante ---------- */
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.whatsapp-float .burbuja {
+  background: var(--blanco);
+  color: var(--marino);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  box-shadow: var(--sombra);
+  display: none;
+}
+
+.whatsapp-float .icono {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--blanco);
+  box-shadow: 0 6px 18px rgba(37,211,102,0.45);
+  transition: transform 0.15s;
+}
+
+.whatsapp-float:hover .icono { transform: scale(1.08); }
+.whatsapp-float:hover .burbuja { display: block; }
+
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .vias, .grid-productos, .grid-contacto, .grid-nosotros { grid-template-columns: 1fr; }
+  .grid-beneficios, .grid-pasos { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 30px; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .nav { width: 100%; justify-content: center; }
+  .header-inner { justify-content: center; text-align: center; }
+  .brand { justify-content: center; }
+}
+
+@media (max-width: 560px) {
+  .grid-beneficios, .grid-pasos { grid-template-columns: 1fr; }
+  .whatsapp-float .burbuja { display: block; }
+  .whatsapp-float .icono { width: 50px; height: 50px; font-size: 24px; }
+}
