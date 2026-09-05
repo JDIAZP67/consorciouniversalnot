@@ -12,7 +12,10 @@ imagenes/         Fotos de productos y logo
 
 ## Publicación
 
-Sitio estático publicado con GitHub Pages desde la rama `main` (raíz del repo).
+Sitio estático publicado con **Netlify / Cloudflare Pages** conectado al repositorio (repo privado). Despliegue automático al hacer `push` a `main`.
+
+- Build command: ninguno (sitio estático)
+- Public directory: `/` (raíz del repo)
 
 ## Panel administrativo
 
