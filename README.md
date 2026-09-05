@@ -12,10 +12,14 @@ imagenes/         Fotos de productos y logo
 
 ## Publicación
 
-Sitio estático publicado con **Netlify / Cloudflare Pages** conectado al repositorio (repo privado). Despliegue automático al hacer `push` a `main`.
+Sitio estático publicado con **GitHub Pages** desde la rama `main` (raíz del repo), en el repositorio público **`consorciouniversalnot`**. Despliegue automático al hacer `git push`.
 
-- Build command: ninguno (sitio estático)
+- URL: https://jdiazp67.github.io/consorciouniversalnot/
 - Public directory: `/` (raíz del repo)
+
+> Flujo: editas `index.html` → `git add -A` → `git commit -m "..."` → `git push`. En ~1 minuto GitHub Pages reconstruye y publica.
+
+> Respaldo: el repo privado `consorcio-universal-not-web` queda asociado como remote `backup` (`git push backup main` para guardar una copia).
 
 ## Panel administrativo
 
