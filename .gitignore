@@ -1,0 +1,5 @@
+# Archivos de trabajo / no versionar
+*.zip
+*.pdf
+.DS_Store
+node_modules/
