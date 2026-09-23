@@ -9,8 +9,12 @@
 </head>
 <body>
 
-  <!-- ============ HEADER ============ -->
-  <header class="header">
+  <!-- Botón hamburguesa (móvil) -->
+  <button class="boton-menu" id="btn-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">☰</button>
+
+  <!-- ============ SIDEBAR / MENÚ LATERAL ============ -->
+  <aside class="header" id="sidebar">
+    <button class="menu-cerrar" id="btn-cerrar" aria-label="Cerrar menú">✕</button>
     <div class="header-inner">
       <div class="brand">
         <img src="imagenes/WhatsApp Image 2026-08-08 at 4.37.59 PM.jpeg" alt="Logo CONSORCIO UNIVERSAL NOT">
@@ -30,7 +34,7 @@
         <a href="#contacto" class="cta-cotizar">Cotizar</a>
       </nav>
     </div>
-  </header>
+  </aside>
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="inicio">
@@ -351,6 +355,9 @@
     <span class="burbuja">¿Dudas? Escríbenos</span>
     <span class="icono">💬</span>
   </a>
+
+  <!-- Capa oscura del menú (móvil) -->
+  <div class="capa-menu" id="capa-menu" hidden></div>
 
   <!-- ============ MODAL DE ACCESO ============ -->
   <div class="modal-overlay" id="modal-acceso" hidden>
@@ -989,6 +996,38 @@
     renderTablaAdmin();
     renderTablaCategorias();
     renderSelectCategorias();
+
+    /* ---------- Menú lateral ---------- */
+    (function () {
+      const lateral = document.getElementById('sidebar');
+      const boton = document.getElementById('btn-menu');
+      const cerrar = document.getElementById('btn-cerrar');
+      const capa = document.getElementById('capa-menu');
+
+      function abrir() {
+        lateral.classList.add('abierto');
+        capa.hidden = false;
+        document.body.classList.add('bloqueo-menu');
+        boton.setAttribute('aria-expanded', 'true');
+      }
+
+      function cerrarMenu() {
+        lateral.classList.remove('abierto');
+        capa.hidden = true;
+        document.body.classList.remove('bloqueo-menu');
+        boton.setAttribute('aria-expanded', 'false');
+      }
+
+      boton.addEventListener('click', abrir);
+      cerrar.addEventListener('click', cerrarMenu);
+      capa.addEventListener('click', cerrarMenu);
+      lateral.querySelectorAll('.nav a').forEach(function (enlace) {
+        enlace.addEventListener('click', cerrarMenu);
+      });
+      window.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') cerrarMenu();
+      });
+    })();
   </script>
 
 </body>
