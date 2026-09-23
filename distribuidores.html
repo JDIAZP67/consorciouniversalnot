@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área Distribuidores — CONSORCIO UNIVERSAL NOT</title>
+  <meta name="description" content="Solicita la lista de precios distribuidor de la línea ONTI.">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <!-- ============ HEADER / NAVEGACIÓN SUPERIOR ============ -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <div class="brand">
+        <a href="index.html"><img src="imagenes/WhatsApp Image 2026-08-08 at 4.37.59 PM.jpeg" alt="Logo CONSORCIO UNIVERSAL NOT"></a>
+        <a href="index.html" class="brand-name">CONSORCIO UNIVERSAL NOT
+          <span>Soluciones en Limpieza y Cosmética</span>
+        </a>
+      </div>
+      <button class="boton-menu" id="btn-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-principal">☰</button>
+      <nav class="nav" id="nav-principal">
+        <a href="index.html">Inicio</a>
+        <a href="catalogo.html#marca-propia">Marca Propia</a>
+        <a href="maquila.html">Maquila</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="#distribuidores">Distribuidores</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="catalogo.html">🔑 Administración</a>
+        <a href="contacto.html" class="cta-cotizar">Cotizar</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="capa-menu" id="capa-menu" hidden></div>
+
+  <!-- ============ CABECERA ============ -->
+  <section class="cabecera-pagina">
+    <h1>Área Distribuidores</h1>
+    <p>Solicita tu lista de precios comercial y material de apoyo. Respondemos en menos de 24 horas.</p>
+  </section>
+
+  <!-- ============ FORMULARIO DISTRIBUIDOR ============ -->
+  <section class="seccion-clara" id="distribuidores">
+    <div class="contenedor">
+      <div class="encabezado-seccion">
+        <span class="etiqueta">Revendedores y distribuidoras</span>
+        <h2>Quiero vender la línea ONTI</h2>
+        <p>Completa el formulario y un asesor te contacta con precios mayoristas. Respondemos en menos de 24 horas.</p>
+      </div>
+
+      <form class="formulario" onsubmit="return confirm('Registro enviado. Un asesor te contactará en menos de 24 horas para coordinar la lista de precios.');">
+        <div class="campo">
+          <label for="d-nombre">Nombre de la empresa</label>
+          <input type="text" id="d-nombre" placeholder="Ej. Distribuidora El Norte S.A.C." required>
+        </div>
+        <div class="campo">
+          <label for="d-ruc">RUC</label>
+          <input type="text" id="d-ruc" placeholder="20XXXXXXXXX" pattern="[0-9]{11}" maxlength="11">
+        </div>
+        <div class="campo">
+          <label for="d-ciudad">Ciudad</label>
+          <input type="text" id="d-ciudad" placeholder="Ej. Lima, Chiclayo, Trujillo..." required>
+        </div>
+        <div class="campo">
+          <label for="d-volumen">Volumen estimado mensual</label>
+          <select id="d-volumen">
+            <option>500 – 1,000 litros</option>
+            <option>1,000 – 5,000 litros</option>
+            <option>5,000 – 10,000 litros</option>
+            <option>Más de 10,000 litros</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="d-producto">Producto de interés</label>
+          <select id="d-producto">
+            <option>Limpiatodo Mango</option>
+            <option>Limpiatodo Manzana Canela</option>
+            <option>Limpiatodo Lavanda</option>
+            <option>Línea completa ONTI</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-verde">Solicitar Lista de Precios</button>
+        <p class="nota-formulario">Los datos se usan solo para enviarte precios. No compartimos tu información.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h4>CONSORCIO UNIVERSAL NOT</h4>
+        <p>Soluciones en Limpieza y Cosmética.</p>
+        <p style="margin-top: 8px;">Marca Propia ONTI · Servicio de Maquila</p>
+        <p style="margin-top: 8px;">Lima, Perú</p>
+      </div>
+      <div>
+        <h4>Enlaces</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="catalogo.html#marca-propia">Marca Propia</a></li>
+          <li><a href="maquila.html">Maquila</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Certificaciones</h4>
+        <ul>
+          <li>DIGESA</li>
+          <li>Buenas Prácticas</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      © 2026 CONSORCIO UNIVERSAL NOT — Soluciones en Limpieza y Cosmética.
+    </div>
+  </footer>
+
+  <!-- WhatsApp flotante -->
+  <a class="whatsapp-float" href="https://wa.me/51992749363" target="_blank" rel="noopener">
+    <span class="burbuja">¿Dudas? Escríbenos</span>
+    <span class="icono">💬</span>
+  </a>
+
+  <script>
+    (function () {
+      var header = document.getElementById('header');
+      var boton = document.getElementById('btn-menu');
+      var nav = document.getElementById('nav-principal');
+      var capa = document.getElementById('capa-menu');
+
+      function abrir() {
+        header.classList.add('abierto');
+        capa.hidden = false;
+        document.body.classList.add('bloqueo-menu');
+        boton.setAttribute('aria-expanded', 'true');
+        boton.innerHTML = '✕';
+      }
+
+      function cerrarMenu() {
+        header.classList.remove('abierto');
+        capa.hidden = true;
+        document.body.classList.remove('bloqueo-menu');
+        boton.setAttribute('aria-expanded', 'false');
+        boton.innerHTML = '☰';
+      }
+
+      boton.addEventListener('click', function () {
+        if (header.classList.contains('abierto')) cerrarMenu(); else abrir();
+      });
+      capa.addEventListener('click', cerrarMenu);
+      nav.querySelectorAll('a').forEach(function (enlace) {
+        enlace.addEventListener('click', cerrarMenu);
+      });
+      window.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') cerrarMenu();
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto — CONSORCIO UNIVERSAL NOT</title>
+  <meta name="description" content="Contacta a CONSORCIO UNIVERSAL NOT para cotizaciones de marca propia y maquila.">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <!-- ============ HEADER / NAVEGACIÓN SUPERIOR ============ -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <div class="brand">
+        <a href="index.html"><img src="imagenes/WhatsApp Image 2026-08-08 at 4.37.59 PM.jpeg" alt="Logo CONSORCIO UNIVERSAL NOT"></a>
+        <a href="index.html" class="brand-name">CONSORCIO UNIVERSAL NOT
+          <span>Soluciones en Limpieza y Cosmética</span>
+        </a>
+      </div>
+      <button class="boton-menu" id="btn-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-principal">☰</button>
+      <nav class="nav" id="nav-principal">
+        <a href="index.html">Inicio</a>
+        <a href="catalogo.html#marca-propia">Marca Propia</a>
+        <a href="maquila.html">Maquila</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="distribuidores.html">Distribuidores</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+        <a href="catalogo.html">🔑 Administración</a>
+        <a href="#contacto" class="cta-cotizar">Cotizar</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="capa-menu" id="capa-menu" hidden></div>
+
+  <!-- ============ CABECERA ============ -->
+  <section class="cabecera-pagina">
+    <h1>Contacto</h1>
+    <p>Cuéntanos qué necesitas y te respondemos en menos de 24 horas.</p>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="seccion-clara" id="contacto">
+    <div class="contenedor">
+      <div class="encabezado-seccion">
+        <span class="etiqueta">Escríbenos</span>
+        <h2>Hablemos de tu proyecto</h2>
+      </div>
+
+      <div class="grid-contacto">
+
+        <div>
+          <div class="dato-contacto">
+            <div class="icono">💬</div>
+            <div>
+              <strong>WhatsApp</strong>
+              <span>+51 992 749 363</span>
+            </div>
+          </div>
+          <div class="dato-contacto">
+            <div class="icono">📧</div>
+            <div>
+              <strong>Correo</strong>
+              <span>ventas@consorciouniversalnot.com</span>
+            </div>
+          </div>
+          <div class="dato-contacto">
+            <div class="icono">📍</div>
+            <div>
+              <strong>Ubicación</strong>
+              <span>Lima, Perú</span>
+            </div>
+          </div>
+          <div class="dato-contacto">
+            <div class="icono">🕐</div>
+            <div>
+              <strong>Atención</strong>
+              <span>Lun – Sáb · 8:00 am – 6:00 pm</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="formulario" onsubmit="return confirm('Cotización enviada. Te contactaremos en menos de 24 horas.');">
+          <div class="campo">
+            <label for="c-tipo">¿Qué necesitas?</label>
+            <select id="c-tipo">
+              <option>Cotización de Marca Propia ONTI</option>
+              <option>Cotización de Maquila</option>
+              <option>Ser distribuidor</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="c-empresa">Empresa</label>
+            <input type="text" id="c-empresa" placeholder="Tu empresa" required>
+          </div>
+          <div class="campo">
+            <label for="c-correo">Correo electrónico</label>
+            <input type="email" id="c-correo" placeholder="tucorreo@empresa.com" required>
+          </div>
+          <div class="campo">
+            <label for="c-mensaje">Mensaje</label>
+            <textarea id="c-mensaje" rows="4" placeholder="Cuéntanos el volumen estimado, fragancias y fechas aproximadas." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-verde">Enviar Cotización</button>
+          <p class="nota-formulario">Los datos se usan solo para responder a tu solicitud. No compartimos tu información.</p>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h4>CONSORCIO UNIVERSAL NOT</h4>
+        <p>Soluciones en Limpieza y Cosmética.</p>
+        <p style="margin-top: 8px;">Marca Propia ONTI · Servicio de Maquila</p>
+        <p style="margin-top: 8px;">Lima, Perú</p>
+      </div>
+      <div>
+        <h4>Enlaces</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="catalogo.html#marca-propia">Marca Propia</a></li>
+          <li><a href="maquila.html">Maquila</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="distribuidores.html">Área Distribuidores</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Certificaciones</h4>
+        <ul>
+          <li>DIGESA</li>
+          <li>Buenas Prácticas</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      © 2026 CONSORCIO UNIVERSAL NOT — Soluciones en Limpieza y Cosmética.
+    </div>
+  </footer>
+
+  <!-- WhatsApp flotante -->
+  <a class="whatsapp-float" href="https://wa.me/51992749363" target="_blank" rel="noopener">
+    <span class="burbuja">¿Dudas? Escríbenos</span>
+    <span class="icono">💬</span>
+  </a>
+
+  <script>
+    (function () {
+      var header = document.getElementById('header');
+      var boton = document.getElementById('btn-menu');
+      var nav = document.getElementById('nav-principal');
+      var capa = document.getElementById('capa-menu');
+
+      function abrir() {
+        header.classList.add('abierto');
+        capa.hidden = false;
+        document.body.classList.add('bloqueo-menu');
+        boton.setAttribute('aria-expanded', 'true');
+        boton.innerHTML = '✕';
+      }
+
+      function cerrarMenu() {
+        header.classList.remove('abierto');
+        capa.hidden = true;
+        document.body.classList.remove('bloqueo-menu');
+        boton.setAttribute('aria-expanded', 'false');
+        boton.innerHTML = '☰';
+      }
+
+      boton.addEventListener('click', function () {
+        if (header.classList.contains('abierto')) cerrarMenu(); else abrir();
+      });
+      capa.addEventListener('click', cerrarMenu);
+      nav.querySelectorAll('a').forEach(function (enlace) {
+        enlace.addEventListener('click', cerrarMenu);
+      });
+      window.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') cerrarMenu();
+      });
+    })();
+  </script>
+
+</body>
+</html>
