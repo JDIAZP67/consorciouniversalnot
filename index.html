@@ -9,12 +9,8 @@
 </head>
 <body>
 
-  <!-- Botón hamburguesa (móvil) -->
-  <button class="boton-menu" id="btn-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">☰</button>
-
-  <!-- ============ SIDEBAR / MENÚ LATERAL ============ -->
-  <aside class="header" id="sidebar">
-    <button class="menu-cerrar" id="btn-cerrar" aria-label="Cerrar menú">✕</button>
+  <!-- ============ HEADER / NAVEGACIÓN SUPERIOR ============ -->
+  <header class="header" id="header">
     <div class="header-inner">
       <div class="brand">
         <img src="imagenes/WhatsApp Image 2026-08-08 at 4.37.59 PM.jpeg" alt="Logo CONSORCIO UNIVERSAL NOT">
@@ -22,7 +18,8 @@
           <span>Soluciones en Limpieza y Cosmética</span>
         </div>
       </div>
-      <nav class="nav">
+      <button class="boton-menu" id="btn-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-principal">☰</button>
+      <nav class="nav" id="nav-principal">
         <a href="#inicio">Inicio</a>
         <a href="#marca-propia">Marca Propia</a>
         <a href="#maquila">Maquila</a>
@@ -34,7 +31,7 @@
         <a href="#contacto" class="cta-cotizar">Cotizar</a>
       </nav>
     </div>
-  </aside>
+  </header>
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="inicio">
@@ -51,7 +48,7 @@
     <div class="contenedor">
       <div class="encabezado-seccion">
         <span class="etiqueta">Dos formas de trabajar contigo</span>
-        <h2>¿QUIERES REVENENDER O TENER TU PROPIA MARCA?</h2>
+        <h2>¿QUIERES REVENDER O TENER TU MARCA PROPIA?</h2>
       </div>
       <div class="vias">
         <div class="via via-azul">
@@ -683,7 +680,12 @@
     function cargarProductos() {
       try {
         const guardado = localStorage.getItem(CLAVE_PRODUCTOS);
-        if (guardado) return JSON.parse(guardado);
+        if (guardado) {
+          const arr = JSON.parse(guardado);
+          if (Array.isArray(arr) && arr.every(function (p) {
+            return p && typeof p.nombre === 'string' && typeof p.estado === 'string';
+          })) return arr;
+        }
       } catch (e) {}
       return JSON.parse(JSON.stringify(PRODUCTOS_DEFECTO));
     }
@@ -701,6 +703,12 @@
       try { localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(PRODUCTOS)); } catch (e) {}
     }
 
+    function restaurarProductos() {
+      PRODUCTOS = JSON.parse(JSON.stringify(PRODUCTOS_DEFECTO));
+      persistirProductos();
+      $('sin-productos').scrollIntoView({ behavior: 'smooth' });
+    }
+
     /* ---------- Catálogo público ---------- */
     function renderCatalogo() {
       const grid = $('grid-productos');
@@ -709,6 +717,13 @@
       grid.innerHTML = '';
       if (activos.length === 0) {
         vacio.hidden = false;
+        const boton = document.createElement('button');
+        boton.type = 'button';
+        boton.className = 'btn btn-oro';
+        boton.style.marginTop = '12px';
+        boton.textContent = 'Restaurar catálogo de ejemplo';
+        boton.addEventListener('click', restaurarProductos);
+        vacio.appendChild(boton);
         return;
       }
       vacio.hidden = true;
@@ -999,29 +1014,32 @@
 
     /* ---------- Menú lateral ---------- */
     (function () {
-      const lateral = document.getElementById('sidebar');
+      const header = document.getElementById('header');
       const boton = document.getElementById('btn-menu');
-      const cerrar = document.getElementById('btn-cerrar');
+      const nav = document.getElementById('nav-principal');
       const capa = document.getElementById('capa-menu');
 
       function abrir() {
-        lateral.classList.add('abierto');
+        header.classList.add('abierto');
         capa.hidden = false;
         document.body.classList.add('bloqueo-menu');
         boton.setAttribute('aria-expanded', 'true');
+        boton.innerHTML = '✕';
       }
 
       function cerrarMenu() {
-        lateral.classList.remove('abierto');
+        header.classList.remove('abierto');
         capa.hidden = true;
         document.body.classList.remove('bloqueo-menu');
         boton.setAttribute('aria-expanded', 'false');
+        boton.innerHTML = '☰';
       }
 
-      boton.addEventListener('click', abrir);
-      cerrar.addEventListener('click', cerrarMenu);
+      boton.addEventListener('click', function () {
+        if (header.classList.contains('abierto')) cerrarMenu(); else abrir();
+      });
       capa.addEventListener('click', cerrarMenu);
-      lateral.querySelectorAll('.nav a').forEach(function (enlace) {
+      nav.querySelectorAll('a').forEach(function (enlace) {
         enlace.addEventListener('click', cerrarMenu);
       });
       window.addEventListener('keydown', function (e) {
