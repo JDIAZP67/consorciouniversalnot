@@ -28,6 +28,16 @@
   --grad-pastel-form: linear-gradient(180deg, #F6FBFF 0%, #DFEEFB 100%);
   --grad-pastel-input: linear-gradient(180deg, #F0F7FD 0%, #E4F0FA 100%);
   --azul-pastel: #7FB3E3;
+
+  /* Acentos por fragancia y servicio (mejora comercial) */
+  --mango-1: #FFEDD2; --mango-2: #FFC08A; --mango-3: #F49A52;
+  --canela-1: #FFF1DC; --canela-2: #F3CBA0; --canela-3: #D99A5B;
+  --lavanda-1: #F1E9FF; --lavanda-2: #CDB7F5; --lavanda-3: #9B7FD4;
+  --grad-mango: linear-gradient(135deg, #FFEDD2 0%, #FFC08A 100%);
+  --grad-canela: linear-gradient(135deg, #FFF1DC 0%, #F3CBA0 100%);
+  --grad-lavanda: linear-gradient(135deg, #F1E9FF 0%, #CDB7F5 100%);
+  --grad-citrico: linear-gradient(135deg, #FDF3E3 0%, #FBE3C0 100%);
+  --grad-verde-suave: linear-gradient(135deg, #E4F6EC 0%, #C2EBD4 100%);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -461,7 +471,7 @@ section { animation: subirSeccion 0.65s ease both; }
 .beneficio p { font-size: 14px; color: var(--texto-suave); margin-top: 6px; }
 
 /* ---------- Pasos maquila ---------- */
-.grid-pasos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-pasos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
 
 .paso {
   background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
@@ -1142,4 +1152,271 @@ section { animation: subirSeccion 0.65s ease both; }
   .banner-cta { padding: 24px 14px; }
   .banner-cta h2 { font-size: 20px; }
   .banner-cta .btn { margin-top: 12px; }
+}
+
+/* ============================================================
+   MEJORAS COMERCIALES — color, movimiento, confianza, analítica
+   ============================================================ */
+
+/* ---------- A · Cinta de fragancias en movimiento (marquee) ---------- */
+.cinta-fragancias {
+  background: var(--grad-citrico);
+  overflow: hidden;
+  padding: 18px 0;
+  border-top: 1px solid rgba(212, 175, 55, 0.35);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+  position: relative;
+}
+.cinta-fragancias::before,
+.cinta-fragancias::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  z-index: 2;
+  pointer-events: none;
+}
+.cinta-fragancias::before { left: 0; background: linear-gradient(90deg, var(--mango-1), transparent); }
+.cinta-fragancias::after { right: 0; background: linear-gradient(-90deg, var(--mango-1), transparent); }
+.cinta-track {
+  display: flex;
+  gap: 34px;
+  width: max-content;
+  animation: desplazarCinta 26s linear infinite;
+}
+.cinta-fragancias:hover .cinta-track { animation-play-state: paused; }
+@keyframes desplazarCinta {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.cinta-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-left: 4px solid var(--dorado);
+  border-radius: 14px;
+  padding: 8px 16px 8px 9px;
+  box-shadow: var(--sombra);
+}
+.cinta-item img {
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.cinta-item .nombre { font-weight: 700; color: var(--marino); font-size: 14px; }
+.cinta-item .sub { color: var(--texto-suave); font-size: 12px; }
+
+/* ---------- A · Vitrina con movimiento sutil ---------- */
+.vitrina-productos .marco {
+  transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s;
+}
+.vitrina-productos .marco:nth-child(1) { animation: flotarItem 6s infinite ease-in-out; }
+.vitrina-productos .marco:nth-child(2) { animation: flotarItem 6s infinite ease-in-out 2s; }
+.vitrina-productos .marco:nth-child(3) { animation: flotarItem 6s infinite ease-in-out 4s; }
+@keyframes flotarItem {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.marco-mango   { background: var(--grad-mango) padding-box, var(--grad-oro) border-box; }
+.marco-canela  { background: var(--grad-canela) padding-box, var(--grad-oro) border-box; }
+.marco-lavanda { background: var(--grad-lavanda) padding-box, var(--grad-oro) border-box; }
+
+/* ---------- B · Acercamiento de color en tarjetas de producto ---------- */
+.beneficio { border-top-color: var(--azul); }
+.beneficio:nth-child(2) .icono { background: var(--grad-verde); }
+.beneficio:nth-child(3) .icono { background: var(--grad-oro); }
+.beneficio:nth-child(4) .icono { background: var(--grad-marino); }
+
+/* ---------- D · Banda de cifras + testimonios ---------- */
+.cifras {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 38px;
+}
+.cifra {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4F9FF 100%);
+  border: 1px solid var(--borde);
+  border-top: 4px solid var(--dorado);
+  border-radius: 12px;
+  padding: 20px 14px;
+  text-align: center;
+  box-shadow: var(--sombra);
+}
+.cifra .numero { font-size: 30px; font-weight: 800; color: var(--marino); }
+.cifra .label { color: var(--texto-suave); font-size: 13px; margin-top: 4px; }
+
+.testimoniales {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  margin-top: 8px;
+}
+.testimonio {
+  position: relative;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FBFF 100%);
+  border: 1px solid var(--borde);
+  border-left: 5px solid var(--dorado);
+  border-radius: 14px;
+  padding: 30px 22px 22px;
+  box-shadow: var(--sombra);
+}
+.testimonio::before {
+  content: "\201C";
+  position: absolute;
+  top: 2px;
+  left: 18px;
+  font-size: 54px;
+  color: var(--dorado);
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+.testimonio p.frase { font-size: 14px; color: var(--texto); font-style: italic; }
+.testimonio .autor { margin-top: 14px; font-weight: 700; color: var(--marino); font-size: 13px; }
+.testimonio .autor span { display: block; font-weight: 500; color: var(--texto-suave); font-size: 12px; margin-top: 2px; }
+
+/* ---------- E · Maquila: qué fabricamos (chips) y volúmenes ---------- */
+.chips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+}
+.chip {
+  background: linear-gradient(180deg, #FFFFFF 0%, #EFFAF3 100%);
+  border: 1px solid var(--borde);
+  border-top: 3px solid var(--verde);
+  border-radius: 12px;
+  padding: 16px 14px;
+  text-align: center;
+  box-shadow: var(--sombra);
+}
+.chip .icono { font-size: 24px; }
+.chip .nombre { font-weight: 700; color: var(--marino); font-size: 14px; margin-top: 6px; }
+.chip .detalle { color: var(--texto-suave); font-size: 12px; margin-top: 3px; }
+
+.datos-produccion {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.dato-prod {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F2FAF6 100%);
+  border: 1px solid var(--borde);
+  border-top: 4px solid var(--verde);
+  border-radius: 12px;
+  padding: 18px 16px;
+  box-shadow: var(--sombra);
+}
+.dato-prod .icono { font-size: 26px; }
+.dato-prod strong { color: var(--marino); display: block; font-size: 15px; }
+.dato-prod span { color: var(--texto-suave); font-size: 13px; }
+
+/* ---------- F1 · Analítica en panel admin ---------- */
+.analitica-resumen {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.analitica-metrica {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4F9FF 100%);
+  border: 1px solid var(--borde);
+  border-top: 4px solid var(--azul);
+  border-radius: 12px;
+  padding: 16px 12px;
+  text-align: center;
+}
+.analitica-metrica .big { font-size: 26px; font-weight: 800; color: var(--marino); }
+.analitica-metrica .lbl { font-size: 12px; color: var(--texto-suave); margin-top: 2px; }
+
+.analitica-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+.analitica-caja {
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 18px;
+}
+.analitica-caja h3 { font-size: 15px; color: var(--marino); margin-bottom: 14px; }
+.barra-h { display: grid; grid-template-columns: 150px 1fr 46px; gap: 8px; align-items: center; margin-bottom: 8px; font-size: 13px; }
+.barra-h .lb { color: var(--texto-suave); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.barra-h .pista { background: var(--gris); border-radius: 8px; height: 16px; overflow: hidden; }
+.barra-h .relleno { background: var(--grad-azul); border-radius: 8px; height: 100%; min-width: 2px; transition: width 0.5s; }
+.barra-h .val { font-weight: 700; color: var(--marino); text-align: right; }
+
+.tabla-analitica {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: var(--blanco);
+}
+.tabla-analitica th {
+  text-align: left;
+  background: var(--grad-marino);
+  color: var(--blanco);
+  padding: 9px 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tabla-analitica td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--borde);
+  color: var(--texto);
+  vertical-align: top;
+}
+.tabla-analitica tr:nth-child(even) td { background: #F6FAFF; }
+
+/* ---------- Confirmación de envío (toast) ---------- */
+.aviso-exito {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #E4F6EC 0%, #C2EBD4 100%);
+  border: 1px solid #2ECC71;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--marino);
+}
+.aviso-exito strong { display: block; }
+
+@media (max-width: 900px) {
+  .cifras { grid-template-columns: 1fr 1fr; }
+  .datos-produccion { grid-template-columns: 1fr; }
+  .analitica-cols { grid-template-columns: 1fr; }
+  .cinta-item img { width: 64px; height: 64px; }
+}
+
+@media (max-width: 560px) {
+  .cifras { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cifra { padding: 14px 8px; }
+  .cifra .numero { font-size: 22px; }
+  .cinta-item { padding: 6px 12px 6px 6px; }
+  .cinta-item img { width: 52px; height: 52px; }
+  .cinta-item .nombre { font-size: 12px; }
+  .cinta-item .sub { font-size: 10px; }
+  .analitica-resumen { grid-template-columns: 1fr 1fr; }
+  .barra-h { grid-template-columns: 104px 1fr 34px; font-size: 12px; }
+  .tabla-analitica { font-size: 12px; }
+  .tabla-analitica th, .tabla-analitica td { padding: 6px 6px; }
+  .aviso-exito { margin-top: 12px; padding: 12px 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinta-track { animation: none; flex-wrap: wrap; justify-content: center; }
+  .vitrina-productos .marco { animation: none; }
 }

@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contacto — CONSORCIO UNIVERSAL NOT</title>
   <meta name="description" content="Contacta a CONSORCIO UNIVERSAL NOT para cotizaciones de marca propia y maquila.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A1F44'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EN%3C/text%3E%3C/svg%3E">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contacto — CONSORCIO UNIVERSAL NOT">
+  <meta property="og:description" content="Cotizaciones de marca propia ONTI y maquila. Respondemos en menos de 24 horas.">
+  <meta property="og:image" content="https://jdiazp67.github.io/consorciouniversalnot/imagenes/WhatsApp%20Image%202026-08-08%20at%204.37.59%20PM.jpeg">
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -82,7 +87,7 @@
           </div>
         </div>
 
-        <form class="formulario" onsubmit="return confirm('Cotización enviada. Te contactaremos en menos de 24 horas.');">
+        <form class="formulario" onsubmit="return enviarLeadContacto(event);">
           <div class="campo">
             <label for="c-tipo">¿Qué necesitas?</label>
             <select id="c-tipo">
@@ -107,6 +112,10 @@
           <button type="submit" class="btn btn-verde">Enviar Cotización</button>
           <p class="nota-formulario">Los datos se usan solo para responder a tu solicitud. No compartimos tu información.</p>
         </form>
+        <div id="aviso-contacto" class="aviso-exito" hidden>
+          <div><strong>¡Solicitud registrada!</strong> Un asesor te contactará en menos de 24 horas.</div>
+          <a href="https://wa.me/51992749363" target="_blank" rel="noopener" class="btn btn-verde">Hablar ya por WhatsApp</a>
+        </div>
 
       </div>
     </div>
@@ -185,6 +194,32 @@
         if (e.key === 'Escape') cerrarMenu();
       });
     })();
+
+    function registrarLead(datos) {
+      datos.fecha = new Date().toISOString();
+      var arr = [];
+      try { arr = JSON.parse(localStorage.getItem('leads_venta') || '[]'); } catch (err) {}
+      if (!Array.isArray(arr)) arr = [];
+      arr.unshift(datos);
+      try { localStorage.setItem('leads_venta', JSON.stringify(arr)); } catch (err) {}
+    }
+
+    function enviarLeadContacto(e) {
+      e.preventDefault();
+      var tipo = document.getElementById('c-tipo').value;
+      var empresa = document.getElementById('c-empresa').value.trim();
+      var correo = document.getElementById('c-correo').value.trim();
+      var mensaje = document.getElementById('c-mensaje').value.trim();
+      if (!empresa || !correo) return false;
+      registrarLead({ tipo: tipo, empresa: empresa, correo: correo, mensaje: mensaje, canal: 'Formulario contacto' });
+      var aviso = document.getElementById('aviso-contacto');
+      var txt = encodeURIComponent('Hola, soy ' + empresa + '. Quiero hacer una consulta: ' + tipo);
+      aviso.querySelector('a').href = 'https://wa.me/51992749363?text=' + txt;
+      aviso.hidden = false;
+      aviso.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      e.target.reset();
+      return false;
+    }
   </script>
 
 </body>

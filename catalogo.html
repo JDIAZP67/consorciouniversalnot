@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo — CONSORCIO UNIVERSAL NOT</title>
   <meta name="description" content="Catálogo de productos Marca Propia ONTI y panel administrativo.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A1F44'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EN%3C/text%3E%3C/svg%3E">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Catálogo ONTI — CONSORCIO UNIVERSAL NOT">
+  <meta property="og:description" content="Limpiatodo antibacterial Mango, Manzana Canela y Lavanda. Marca propia y maquila.">
+  <meta property="og:image" content="https://jdiazp67.github.io/consorciouniversalnot/imagenes/WhatsApp%20Image%202026-08-08%20at%204.37.59%20PM.jpeg">
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -183,6 +188,7 @@
         <a href="#card-categorias">Categorías</a>
         <a href="#card-solicitudes">Solicitudes</a>
         <a href="#card-leads">Leads Distribuidores</a>
+        <a href="#card-analitica">📊 Analítica</a>
       </nav>
 
       <!-- Formulario Nuevo / Editar Producto -->
@@ -365,6 +371,29 @@
             </tr>
           </tbody>
         </table>
+      </div>
+
+    <div class="tarjeta-admin" id="card-analitica">
+        <h2>📊 Analítica de solicitudes recibidas</h2>
+        <p class="nota-formulario">Se alimenta en tiempo real de los formularios de <strong>Contacto</strong> y <strong>Área Distribuidores</strong> (localStorage de este navegador). Fase 2 prevista: envío a Google Sheets/Base remota para verlas desde cualquier dispositivo.</p>
+        <div class="analitica-resumen">
+          <div class="analitica-metrica"><div class="big" id="analitica-metrica-total">0</div><div class="lbl">Solicitudes</div></div>
+          <div class="analitica-metrica"><div class="big" id="analitica-metrica-dists">0</div><div class="lbl">Distribuidores</div></div>
+          <div class="analitica-metrica"><div class="big" id="analitica-metrica-cotiz">0</div><div class="lbl">Cotizaciones</div></div>
+          <div class="analitica-metrica"><div class="big" id="analitica-metrica-ciudades">0</div><div class="lbl">Ciudades</div></div>
+        </div>
+        <div class="analitica-cols">
+          <div class="analitica-caja"><h3>Solicitudes por tipo</h3><div id="analitica-tipos"></div></div>
+          <div class="analitica-caja"><h3>Productos más solicitados</h3><div id="analitica-productos"></div></div>
+        </div>
+        <div class="analitica-caja" style="margin-bottom:18px;">
+          <h3>Últimas solicitudes</h3>
+          <div id="analitica-tabla"></div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-azul" onclick="exportarCSV()">⬇ Exportar CSV</button>
+          <button class="btn btn-blanco" onclick="limpiarLeads()">Limpiar datos de prueba</button>
+        </div>
       </div>
 
     </div><!-- /.admin-wrap -->
@@ -897,6 +926,92 @@
       });
     })();
 
+    /* ---------- Analítica de leads (localStorage) ---------- */
+
+    function obtenerLeads() {
+      try {
+        const arr = JSON.parse(localStorage.getItem('leads_venta') || '[]');
+        return Array.isArray(arr) ? arr : [];
+      } catch (e) { return []; }
+    }
+
+    function contadorLeads(arreglo, fn) {
+      const mapa = {};
+      arreglo.forEach(function (el) {
+        let k = fn(el);
+        k = (k === undefined || k === null) ? '—' : String(k).trim();
+        if (k === '') k = '—';
+        mapa[k] = (mapa[k] || 0) + 1;
+      });
+      return mapa;
+    }
+
+    function dibujarBarras(contenedorId, mapa) {
+      const cont = $(contenedorId);
+      if (!cont) return;
+      const valores = Object.keys(mapa).map(function (k) { return mapa[k]; });
+      const max = valores.length ? Math.max.apply(null, valores) : 0;
+      let html = '';
+      Object.keys(mapa).sort(function (a, b) { return mapa[b] - mapa[a]; }).forEach(function (k) {
+        const pct = max > 0 ? Math.round((mapa[k] * 100) / max) : 0;
+        html += '<div class="barra-h"><span class="lb" title="' + k + '">' + k + '</span><div class="pista"><div class="relleno" style="width:' + Math.max(pct, 4) + '%"></div></div><span class="val">' + mapa[k] + '</span></div>';
+      });
+      if (!html) html = '<p class="nota-formulario">Aún no hay solicitudes registradas en este navegador. Los formularios de Contacto y Área Distribuidores guardan aquí cada envío.</p>';
+      cont.innerHTML = html;
+    }
+
+    function fechaCorta(iso) {
+      try { return new Date(iso).toLocaleDateString('es-PE'); }
+      catch (e) { return iso || '—'; }
+    }
+
+    function renderAnalitica() {
+      const leads = obtenerLeads();
+      const total = leads.length;
+      const distribuidores = leads.filter(function (l) { return l.tipo === 'Ser distribuidor'; }).length;
+      const ciudades = Object.keys(contadorLeads(leads, function (l) { return l.ciudad; }));
+
+      document.getElementById('analitica-metrica-total').textContent = total;
+      document.getElementById('analitica-metrica-dists').textContent = distribuidores;
+      document.getElementById('analitica-metrica-cotiz').textContent = Math.max(0, total - distribuidores);
+      document.getElementById('analitica-metrica-ciudades').textContent = ciudades.length;
+
+      dibujarBarras('analitica-tipos', contadorLeads(leads, function (l) { return l.tipo || l.canal || 'Otro'; }));
+      dibujarBarras('analitica-productos', contadorLeads(leads, function (l) {
+        if (l.producto) return l.producto.replace('Limpiatodo ', '').trim();
+        return l.tipo || '—';
+      }));
+
+      let filas = '';
+      leads.slice(0, 12).forEach(function (l) {
+        filas += '<tr><td>' + fechaCorta(l.fecha) + '</td><td>' + (l.empresa || '—') + '</td><td>' + (l.tipo || '—') + '</td><td>' + (l.ciudad || '—') + '</td><td>' + (l.volumen || l.producto || '—') + '</td></tr>';
+      });
+      document.getElementById('analitica-tabla').innerHTML = '<table class="tabla-analitica"><thead><tr><th>Fecha</th><th>Empresa</th><th>Tipo</th><th>Ciudad</th><th>Volumen / Producto</th></tr></thead><tbody>' + filas + '</tbody></table>';
+    }
+
+    function exportarCSV() {
+      const leads = obtenerLeads();
+      const filas = [['fecha', 'tipo', 'canal', 'empresa', 'ruc', 'ciudad', 'volumen', 'producto', 'correo', 'mensaje']];
+      leads.forEach(function (l) {
+        filas.push([l.fecha, l.tipo, l.canal, l.empresa, l.ruc, l.ciudad, l.volumen, l.producto, l.correo, (l.mensaje || '').replace(/\n/g, ' ')]);
+      });
+      const csv = filas.map(function (f) {
+        return f.map(function (c) { return '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"'; }).join(',');
+      }).join('\n');
+      const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'leads_consorcio_universal_not.csv';
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+    }
+
+    function limpiarLeads() {
+      if (!confirm('¿Eliminar todos los leads guardados en este navegador?')) return;
+      try { localStorage.removeItem('leads_venta'); } catch (e) {}
+      renderAnalitica();
+    }
+
     document.querySelectorAll('#grid-productos .img-producto').forEach(function (img) {
       img.addEventListener('error', function () {
         respaldoImagen(this, null);
@@ -907,6 +1022,7 @@
     renderTablaAdmin();
     renderTablaCategorias();
     renderSelectCategorias();
+    renderAnalitica();
   </script>
 
 </body>

@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Área Distribuidores — CONSORCIO UNIVERSAL NOT</title>
   <meta name="description" content="Solicita la lista de precios distribuidor de la línea ONTI. Margen, POP y despacho nacional.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A1F44'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EN%3C/text%3E%3C/svg%3E">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Área Distribuidores ONTI — CONSORCIO UNIVERSAL NOT">
+  <meta property="og:description" content="Solicita la lista de precios distribuidor de la línea ONTI. Margen, POP y despacho nacional.">
+  <meta property="og:image" content="https://jdiazp67.github.io/consorciouniversalnot/imagenes/WhatsApp%20Image%202026-08-08%20at%204.37.59%20PM.jpeg">
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -144,7 +149,7 @@
           </div>
         </div>
 
-        <form class="formulario" onsubmit="return confirm('Registro enviado. Un asesor te contactará en menos de 24 horas para coordinar la lista de precios.');">
+        <form class="formulario" onsubmit="return enviarLeadDistribuidor(event);">
           <div class="campo">
             <label for="d-nombre">Nombre de la empresa</label>
             <input type="text" id="d-nombre" placeholder="Ej. Distribuidora El Norte S.A.C." required>
@@ -177,7 +182,12 @@
           </div>
           <button type="submit" class="btn btn-verde">Solicitar Lista de Precios</button>
           <p class="nota-formulario">Los datos se usan solo para enviarte precios. No compartimos tu información.</p>
+          <p class="nota-formulario">¿Prefieres agilizar? <a href="https://wa.me/51992749363?text=Hola%2C%20soy%20una%20distribuidora%20y%20quiero%20la%20lista%20de%20precios%20ONTI." target="_blank" rel="noopener">Escríbenos por WhatsApp</a>.</p>
         </form>
+        <div id="aviso-distribuidor" class="aviso-exito" hidden>
+          <div><strong>¡Registro recibido!</strong> Un asesor te enviará la lista de precios en menos de 24 horas.</div>
+          <a href="https://wa.me/51992749363" target="_blank" rel="noopener" class="btn btn-verde">Acelerar por WhatsApp</a>
+        </div>
 
       </div>
     </div>
@@ -267,6 +277,33 @@
         if (e.key === 'Escape') cerrarMenu();
       });
     })();
+
+    function registrarLead(datos) {
+      datos.fecha = new Date().toISOString();
+      var arr = [];
+      try { arr = JSON.parse(localStorage.getItem('leads_venta') || '[]'); } catch (err) {}
+      if (!Array.isArray(arr)) arr = [];
+      arr.unshift(datos);
+      try { localStorage.setItem('leads_venta', JSON.stringify(arr)); } catch (err) {}
+    }
+
+    function enviarLeadDistribuidor(e) {
+      e.preventDefault();
+      var empresa = document.getElementById('d-nombre').value.trim();
+      var ruc = document.getElementById('d-ruc').value.trim();
+      var ciudad = document.getElementById('d-ciudad').value.trim();
+      var volumen = document.getElementById('d-volumen').value;
+      var producto = document.getElementById('d-producto').value;
+      if (!empresa || !ciudad) return false;
+      registrarLead({ tipo: 'Ser distribuidor', empresa: empresa, ciudad: ciudad, volumen: volumen, producto: producto, canal: 'Formulario distribuidor', ruc: ruc });
+      var aviso = document.getElementById('aviso-distribuidor');
+      var txt = encodeURIComponent('Hola, soy ' + empresa + ' de ' + ciudad + '. Quiero la lista de precios distribuidor (' + producto + ').');
+      aviso.querySelector('a').href = 'https://wa.me/51992749363?text=' + txt;
+      aviso.hidden = false;
+      aviso.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      e.target.reset();
+      return false;
+    }
   </script>
 
 </body>
