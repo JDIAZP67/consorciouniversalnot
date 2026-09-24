@@ -239,6 +239,7 @@
         <table class="tabla-admin">
           <thead>
             <tr>
+              <th>Foto</th>
               <th>Producto</th>
               <th>Línea</th>
               <th>Categoría</th>
@@ -436,6 +437,9 @@
     const CLAVE_PRODUCTOS = 'productos_onti';
     const IMAGENES_DIR = 'imagenes/';
 
+    const IMAGEN_FALLBACK = 'data:image/svg+xml;charset=UTF-8,' +
+      encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2A7DE1"/><stop offset="1" stop-color="#0A1F44"/></linearGradient></defs><rect width="600" height="800" fill="url(#g)"/><circle cx="300" cy="340" r="150" fill="none" stroke="#D4AF37" stroke-width="10" opacity="0.85"/><text x="300" y="360" font-family="Arial" font-size="56" font-weight="bold" fill="#FFFFFF" text-anchor="middle">ONTI</text><text x="300" y="430" font-family="Arial" font-size="24" fill="#D4AF37" text-anchor="middle">Consorcio Universal NOT</text></svg>');
+
     const PRODUCTOS_DEFECTO = [
       { id: 'p1', nombre: 'Limpiatodo Antibacterial Mango', linea: 'Marca Propia', categoria: 'Limpieza', fragancia: 'Mango', presentacion: '3.78L · 1L · 4L · 20L', descripcion: 'Elimina 99.9% de bacterias. Aroma dulce y duradero. Ideal para hogares.', imagen: IMAGENES_DIR + 'WhatsApp Image 2026-08-08 at 4.38.08 PM.jpeg', stock: 'Lote 24-08 · en stock', estado: 'Activo' },
       { id: 'p2', nombre: 'Limpiatodo Antibacterial Manzana Canela', linea: 'Marca Propia', categoria: 'Limpieza', fragancia: 'Manzana Canela', presentacion: '3.78L · 1L · 4L · 20L', descripcion: 'Elimina 99.9% de bacterias. Aroma navideño y familiar. Alta rotación.', imagen: IMAGENES_DIR + 'WhatsApp Image 2026-08-08 at 4.38.24 PM.jpeg', stock: 'Lote 24-08 · en stock', estado: 'Activo' },
@@ -449,8 +453,10 @@
         if (guardado) {
           const arr = JSON.parse(guardado);
           if (Array.isArray(arr) && arr.length > 0 && arr.every(function (p) {
-            return p && typeof p.nombre === 'string' && typeof p.estado === 'string';
+            return p && typeof p.nombre === 'string' && typeof p.estado === 'string' &&
+              typeof p.imagen === 'string' && p.imagen.length > 0;
           })) return arr;
+          localStorage.removeItem(CLAVE_PRODUCTOS);
         }
       } catch (e) {}
       return JSON.parse(JSON.stringify(PRODUCTOS_DEFECTO));
@@ -506,6 +512,11 @@
             '<span class="precio">Precio distribuidor: Solicitar cotización</span>' +
             '<a href="distribuidores.html" class="btn btn-azul">Solicitar Cotización</a>' +
           '</div>';
+        const img = tarjeta.querySelector('.img-producto');
+        img.addEventListener('error', function () {
+          this.onerror = null;
+          this.src = IMAGEN_FALLBACK;
+        });
         grid.appendChild(tarjeta);
       });
     }
@@ -518,17 +529,31 @@
         const activo = p.estado === 'Activo';
         const tr = document.createElement('tr');
         tr.dataset.id = p.id;
-        tr.innerHTML =
+        const thumb = document.createElement('img');
+        thumb.className = 'thumb-admin';
+        thumb.src = p.imagen || IMAGEN_FALLBACK;
+        thumb.alt = '';
+        thumb.addEventListener('error', function () {
+          this.onerror = null;
+          this.src = IMAGEN_FALLBACK;
+        });
+        const tdFoto = document.createElement('td');
+        tdFoto.appendChild(thumb);
+        const tdOpciones = document.createElement('td');
+        tdOpciones.innerHTML =
+          '<a href="#" class="btn-mini" onclick="abrirFormProducto(this.closest(\'tr\').dataset.id); return false;">Editar</a> ' +
+          '<a href="#" class="btn-mini ' + (activo ? 'rojo' : 'oro') + '" onclick="alternarEstado(this.closest(\'tr\').dataset.id); return false;">' +
+          (activo ? 'Dar de baja' : 'Activar') + '</a> ' +
+          '<a href="#" class="btn-mini rojo" onclick="eliminarProducto(this.closest(\'tr\').dataset.id); return false;">Eliminar</a>';
+        tr.appendChild(tdFoto);
+        tr.insertAdjacentHTML('beforeend',
           '<td>' + p.nombre + '</td>' +
           '<td>' + p.linea + '</td>' +
           '<td>' + p.categoria + '</td>' +
           '<td>' + p.presentacion + '</td>' +
           '<td>' + p.stock + '</td>' +
-          '<td><span class="etiqueta-estado ' + (activo ? 'activo' : 'inactivo') + '">' + p.estado + '</span></td>' +
-          '<td><a href="#" class="btn-mini" onclick="abrirFormProducto(this.closest(\'tr\').dataset.id); return false;">Editar</a> ' +
-          '<a href="#" class="btn-mini ' + (activo ? 'rojo' : 'oro') + '" onclick="alternarEstado(this.closest(\'tr\').dataset.id); return false;">' +
-          (activo ? 'Dar de baja' : 'Activar') + '</a> ' +
-          '<a href="#" class="btn-mini rojo" onclick="eliminarProducto(this.closest(\'tr\').dataset.id); return false;">Eliminar</a></td>';
+          '<td><span class="etiqueta-estado ' + (activo ? 'activo' : 'inactivo') + '">' + p.estado + '</span></td>');
+        tr.appendChild(tdOpciones);
         tbody.appendChild(tr);
       });
     }

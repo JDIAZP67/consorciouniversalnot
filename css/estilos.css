@@ -386,7 +386,7 @@ section { animation: subirSeccion 0.65s ease both; }
 }
 
 /* ---------- Tarjetas de producto ---------- */
-.grid-productos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; min-width: 0; }
+.grid-productos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 26px; min-width: 0; }
 
 .producto {
   background: linear-gradient(180deg, #FFFFFF 0%, #F8FBFF 100%);
@@ -923,6 +923,16 @@ section { animation: subirSeccion 0.65s ease both; }
 .activo { background: #E6F9F0; color: #1B7A47; }
 .inactivo { background: #FDECEC; color: #B23B3B; }
 
+.thumb-admin {
+  width: 44px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 7px;
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra);
+  background: var(--gris);
+}
+
 .btn-mini {
   padding: 6px 14px;
   border-radius: 6px;
@@ -997,7 +1007,8 @@ section { animation: subirSeccion 0.65s ease both; }
   .hero-visual { height: 420px; max-width: 380px; }
   .hero-disco { width: 260px; height: 260px; }
   .hero-producto { max-width: 280px; }
-  .vias, .grid-productos, .grid-contacto, .grid-nosotros, .grid-somos { grid-template-columns: 1fr; }
+  .vias, .grid-contacto, .grid-nosotros, .grid-somos { grid-template-columns: 1fr; }
+  .grid-productos { grid-template-columns: repeat(2, 1fr); }
   .grid-beneficios, .grid-pasos { grid-template-columns: 1fr 1fr; }
   .vitrina-productos { max-width: 460px; margin: 0 auto; }
   .vitrina-productos .marco:nth-child(3) { grid-column: span 2; max-width: 62%; justify-self: center; }
@@ -1007,6 +1018,12 @@ section { animation: subirSeccion 0.65s ease both; }
 
 @media (max-width: 560px) {
   .grid-beneficios, .grid-pasos { grid-template-columns: 1fr; }
+  .grid-productos { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .producto .cuerpo { padding: 12px; }
+  .producto h3 { font-size: 15px; }
+  .producto .presentacion, .producto p { font-size: 12px; }
+  .producto .btn { padding: 10px 8px; font-size: 13px; }
+  .producto .precio { font-size: 13px; }
   .vitrina-productos { grid-template-columns: 1fr; max-width: 300px; }
   .vitrina-productos .marco:nth-child(3) { grid-column: auto; max-width: none; justify-self: auto; }
   .vitrina-productos .marco:nth-child(2) { transform: translateY(-8px) rotate(2deg); }
