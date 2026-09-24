@@ -59,29 +59,24 @@
     <div class="contenedor">
       <div class="encabezado-seccion">
         <span class="etiqueta">Marca Propia</span>
-        <h2>Línea Marca Propia ONTI</h2>
-        <p>Productos de limpieza listos para distribuir. Alta rotación y margen para tu negocio.</p>
+        <h2>Sé distribuidor de ONTI</h2>
+        <p>¿Quieres revender la línea ONTI? Sigue estos pasos y empieza hoy con soporte comercial completo.</p>
       </div>
-      <div class="grid-beneficios">
-        <div class="beneficio">
-          <div class="icono">📈</div>
-          <h4>Margen hasta 35%</h4>
-          <p>Margen competitivo para tu negocio.</p>
+      <div class="grid-pasos">
+        <div class="paso">
+          <div class="numero">1</div>
+          <h4>Solicita la lista de precios</h4>
+          <p>Escoge el producto y la fragancia que quieres revender. La lista llega por correo en menos de 24 horas.</p>
         </div>
-        <div class="beneficio">
-          <div class="icono">📦</div>
-          <h4>Material POP</h4>
-          <p>Catálogos, fotos y soporte comercial.</p>
+        <div class="paso">
+          <div class="numero">2</div>
+          <h4>Recibe tu primer pedido</h4>
+          <p>Coordinamos el despacho desde Lima con tu comprobante y condiciones de pago.</p>
         </div>
-        <div class="beneficio">
-          <div class="icono">🚚</div>
-          <h4>Despacho Nacional</h4>
-          <p>Envíos a todo el Perú desde Lima.</p>
-        </div>
-        <div class="beneficio">
-          <div class="icono">✔</div>
-          <h4>Calidad Garantizada</h4>
-          <p>Fórmulas probadas + registro DIGESA.</p>
+        <div class="paso">
+          <div class="numero">3</div>
+          <h4>Revende con soporte</h4>
+          <p>Accede a fotos, catálogos digitales y material POP para impulsar tus ventas.</p>
         </div>
       </div>
       <div style="text-align: center; margin-top: 40px;">
@@ -453,7 +448,7 @@
         const guardado = localStorage.getItem(CLAVE_PRODUCTOS);
         if (guardado) {
           const arr = JSON.parse(guardado);
-          if (Array.isArray(arr) && arr.every(function (p) {
+          if (Array.isArray(arr) && arr.length > 0 && arr.every(function (p) {
             return p && typeof p.nombre === 'string' && typeof p.estado === 'string';
           })) return arr;
         }
