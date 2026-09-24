@@ -464,6 +464,29 @@
       { id: 'p4', nombre: 'Desinfectante 5L (maquila)', linea: 'Maquila', categoria: 'Maquila', fragancia: 'Otra', presentacion: 'Bidón 5L', descripcion: 'Desinfectante para maquila. Bajo pedido desde 500L.', imagen: IMAGENES_DIR + 'WhatsApp Image 2026-08-08 at 4.38.36 PM.jpeg', stock: 'Bajo pedido · 500L min', estado: 'Inactivo' }
     ];
 
+    const IMAGEN_POR_FRAGANCIA = {
+      'Mango': IMAGENES_DIR + 'WhatsApp Image 2026-08-08 at 4.38.08 PM.jpeg',
+      'Manzana Canela': IMAGENES_DIR + 'WhatsApp Image 2026-08-08 at 4.38.24 PM.jpeg',
+      'Lavanda': IMAGENES_DIR + 'WhatsApp Image 2026-08-08 at 4.38.36 PM.jpeg'
+    };
+    const IMAGEN_DEFECTO_FINAL = IMAGEN_POR_FRAGANCIA['Lavanda'];
+
+    function respaldoImagen(img, p) {
+      const primera = p && IMAGEN_POR_FRAGANCIA[p.fragancia];
+      if (!primera) {
+        img.onerror = null;
+        img.src = IMAGEN_FALLBACK;
+        return;
+      }
+      if (img.getAttribute('src') !== primera) {
+        img.onerror = null;
+        img.src = primera;
+      } else {
+        img.onerror = null;
+        img.src = IMAGEN_FALLBACK;
+      }
+    }
+
     function cargarProductos() {
       try {
         const guardado = localStorage.getItem(CLAVE_PRODUCTOS);
@@ -471,12 +494,21 @@
           const arr = JSON.parse(guardado);
           if (Array.isArray(arr) && arr.length > 0 && arr.every(function (p) {
             return p && typeof p.nombre === 'string' && typeof p.estado === 'string' &&
-              typeof p.imagen === 'string' && p.imagen.length > 0;
+              imagenVerosimil(p.imagen);
           })) return arr;
           localStorage.removeItem(CLAVE_PRODUCTOS);
         }
       } catch (e) { localStorage.removeItem(CLAVE_PRODUCTOS); }
       return null;
+    }
+
+    function imagenVerosimil(u) {
+      return typeof u === 'string' && (
+        u.indexOf('data:') === 0 ||
+        u.indexOf('http:') === 0 ||
+        u.indexOf('https:') === 0 ||
+        u.indexOf(IMAGENES_DIR) === 0
+      );
     }
 
     function productosActuales() {
@@ -544,8 +576,7 @@
           '</div>';
         const img = tarjeta.querySelector('.img-producto');
         img.addEventListener('error', function () {
-          this.onerror = null;
-          this.src = IMAGEN_FALLBACK;
+          respaldoImagen(this, p);
         });
         grid.appendChild(tarjeta);
       });
@@ -868,8 +899,7 @@
 
     document.querySelectorAll('#grid-productos .img-producto').forEach(function (img) {
       img.addEventListener('error', function () {
-        this.onerror = null;
-        this.src = IMAGEN_FALLBACK;
+        respaldoImagen(this, null);
       });
     });
 
