@@ -49,7 +49,41 @@
         <h2>Nuestros Productos Estrella</h2>
         <p>Limpiatodo antibacterial multisuperficie 3.78L en tres fragancias que cubren el gusto de todo el Perú.</p>
       </div>
-      <div class="grid-productos" id="grid-productos"></div>
+      <div class="grid-productos" id="grid-productos">
+        <div class="producto">
+          <img class="img-producto" src="imagenes/WhatsApp Image 2026-08-08 at 4.38.08 PM.jpeg" alt="Limpiatodo Antibacterial Mango">
+          <div class="cuerpo">
+            <h3>Limpiatodo Antibacterial Mango</h3>
+            <span class="fragancia">Fragancia Mango</span>
+            <p>Elimina 99.9% de bacterias. Aroma dulce y duradero. Ideal para hogares.</p>
+            <span class="presentacion">Presentación: 3.78L · 1L · 4L · 20L</span>
+            <span class="precio">Precio distribuidor: Solicitar cotización</span>
+            <a href="distribuidores.html" class="btn btn-azul">Solicitar Cotización</a>
+          </div>
+        </div>
+        <div class="producto">
+          <img class="img-producto" src="imagenes/WhatsApp Image 2026-08-08 at 4.38.24 PM.jpeg" alt="Limpiatodo Antibacterial Manzana Canela">
+          <div class="cuerpo">
+            <h3>Limpiatodo Antibacterial Manzana Canela</h3>
+            <span class="fragancia">Fragancia Manzana Canela</span>
+            <p>Elimina 99.9% de bacterias. Aroma navideño y familiar. Alta rotación.</p>
+            <span class="presentacion">Presentación: 3.78L · 1L · 4L · 20L</span>
+            <span class="precio">Precio distribuidor: Solicitar cotización</span>
+            <a href="distribuidores.html" class="btn btn-azul">Solicitar Cotización</a>
+          </div>
+        </div>
+        <div class="producto">
+          <img class="img-producto" src="imagenes/WhatsApp Image 2026-08-08 at 4.38.36 PM.jpeg" alt="Limpiatodo Antibacterial Lavanda">
+          <div class="cuerpo">
+            <h3>Limpiatodo Antibacterial Lavanda</h3>
+            <span class="fragancia">Fragancia Lavanda</span>
+            <p>Elimina 99.9% de bacterias. Aroma relajante. Ideal para hoteles y spas.</p>
+            <span class="presentacion">Presentación: 3.78L · 1L · 4L · 20L</span>
+            <span class="precio">Precio distribuidor: Solicitar cotización</span>
+            <a href="distribuidores.html" class="btn btn-azul">Solicitar Cotización</a>
+          </div>
+        </div>
+      </div>
       <p class="sin-productos" id="sin-productos" hidden>Próximamente más productos de la línea ONTI.</p>
     </div>
   </section>
@@ -441,15 +475,27 @@
           })) return arr;
           localStorage.removeItem(CLAVE_PRODUCTOS);
         }
-      } catch (e) {}
-      return JSON.parse(JSON.stringify(PRODUCTOS_DEFECTO));
+      } catch (e) { localStorage.removeItem(CLAVE_PRODUCTOS); }
+      return null;
+    }
+
+    function productosActuales() {
+      return PRODUCTOS || JSON.parse(JSON.stringify(PRODUCTOS_DEFECTO));
+    }
+
+    function asegurarModoAdmin() {
+      if (!PRODUCTOS) {
+        PRODUCTOS = JSON.parse(JSON.stringify(PRODUCTOS_DEFECTO));
+        localStorage.removeItem(CLAVE_PRODUCTOS);
+        renderTablaAdmin();
+      }
     }
 
     let PRODUCTOS = cargarProductos();
     let imagenNueva = null;
 
     function buscarProducto(id) {
-      return PRODUCTOS.find(function (x) { return x.id === id; });
+      return productosActuales().find(function (x) { return x.id === id; });
     }
 
     function persistirProductos() {
@@ -468,6 +514,7 @@
     function renderCatalogo() {
       const grid = $('grid-productos');
       const vacio = $('sin-productos');
+      if (!PRODUCTOS) return;
       const activos = PRODUCTOS.filter(function (p) { return p.estado === 'Activo'; });
       grid.innerHTML = '';
       if (activos.length === 0) {
@@ -508,7 +555,7 @@
     function renderTablaAdmin() {
       const tbody = $('tabla-productos');
       tbody.innerHTML = '';
-      PRODUCTOS.forEach(function (p) {
+      productosActuales().forEach(function (p) {
         const activo = p.estado === 'Activo';
         const tr = document.createElement('tr');
         tr.dataset.id = p.id;
@@ -591,6 +638,7 @@
 
     function guardarProducto(e) {
       e.preventDefault();
+      asegurarModoAdmin();
       const nombre = $('p-nombre').value;
       const linea = $('p-linea').value;
       const categoria = $('p-categoria').value;
@@ -632,6 +680,7 @@
     }
 
     function alternarEstado(id) {
+      asegurarModoAdmin();
       const p = buscarProducto(id);
       if (p) {
         p.estado = p.estado === 'Activo' ? 'Inactivo' : 'Activo';
@@ -774,6 +823,7 @@
     }
 
     function eliminarProducto(id) {
+      asegurarModoAdmin();
       const p = buscarProducto(id);
       if (p && confirm('¿Eliminar "' + p.nombre + '" y su foto?')) {
         PRODUCTOS = PRODUCTOS.filter(function (x) { return x.id !== id; });
@@ -815,6 +865,13 @@
         if (e.key === 'Escape') cerrarMenu();
       });
     })();
+
+    document.querySelectorAll('#grid-productos .img-producto').forEach(function (img) {
+      img.addEventListener('error', function () {
+        this.onerror = null;
+        this.src = IMAGEN_FALLBACK;
+      });
+    });
 
     renderCatalogo();
     renderTablaAdmin();
