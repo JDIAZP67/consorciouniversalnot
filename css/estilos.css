@@ -597,6 +597,17 @@ section { animation: subirSeccion 0.65s ease both; }
 .dato-contacto h4 { color: var(--marino); font-size: 15px; }
 .dato-contacto p { color: var(--texto-suave); font-size: 14px; }
 
+.imagen-pres {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--azul-pastel);
+  box-shadow: var(--sombra-fuerte);
+  margin-bottom: 20px;
+}
+
 /* ---------- Nosotros ---------- */
 .grid-nosotros { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
 
